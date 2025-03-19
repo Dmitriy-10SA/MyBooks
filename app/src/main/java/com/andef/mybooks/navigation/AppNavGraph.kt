@@ -4,19 +4,29 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 
 @Composable
 fun AppNavGraph(
     navHostController: NavHostController,
-    findScreenContent: @Composable () -> Unit,
+    findScreenBookListContent: @Composable () -> Unit,
+    findScreenBookContent: @Composable () -> Unit,
     favouriteScreen: @Composable () -> Unit
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.FindScreen
+        startDestination = Screen.FindScreen.route
     ) {
-        composable(Screen.FindScreen.route) {
-            findScreenContent()
+        navigation(
+            route = Screen.FindScreen.route,
+            startDestination = Screen.FindScreenBookList.route
+        ) {
+            composable(Screen.FindScreenBookList.route) {
+                findScreenBookListContent()
+            }
+            composable(Screen.FindScreenBook.route) {
+                findScreenBookContent()
+            }
         }
         composable(Screen.FavouriteScreen.route) {
             favouriteScreen()

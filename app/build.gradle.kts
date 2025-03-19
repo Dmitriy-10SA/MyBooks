@@ -56,6 +56,13 @@ dependencies {
     //Navigation with Compose
     implementation(libs.androidx.navigation.compose)
 
+    //Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    //ViewModelScope
+    implementation(libs.lifecycle.viewmodel.ktx)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
