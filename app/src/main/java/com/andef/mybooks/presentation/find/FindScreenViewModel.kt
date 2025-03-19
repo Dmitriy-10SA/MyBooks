@@ -3,7 +3,7 @@ package com.andef.mybooks.presentation.find
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andef.mybooks.domain.usecases.GetBookListUseCase
+import com.andef.mybooks.domain.usecases.network.GetBookListUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

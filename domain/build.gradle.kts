@@ -19,4 +19,7 @@ dependencies {
     //Dagger 2
     implementation(libs.dagger)
     kapt(libs.google.dagger.compiler)
+
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.android)
 }

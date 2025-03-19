@@ -1,4 +1,4 @@
-package com.andef.mybooks.domain.repository
+package com.andef.mybooks.domain.repository.network
 
 import com.andef.mybooks.domain.entities.Book
 

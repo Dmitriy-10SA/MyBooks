@@ -3,7 +3,7 @@ package com.andef.mybooks.data.repository
 import com.andef.mybooks.data.api.ApiService
 import com.andef.mybooks.data.mappers.BookListDtoToListOfBookMapper
 import com.andef.mybooks.domain.entities.Book
-import com.andef.mybooks.domain.repository.BookNetworkRepository
+import com.andef.mybooks.domain.repository.network.BookNetworkRepository
 import okio.IOException
 import javax.inject.Inject
 
