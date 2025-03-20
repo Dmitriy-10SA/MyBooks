@@ -1,5 +1,10 @@
 package com.andef.mybooks.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,11 +30,33 @@ fun AppNavGraph(
             startDestination = Screen.FindScreenBookList.route
         ) {
             //экран поиска книг
-            composable(Screen.FindScreenBookList.route) {
+            composable(
+                route = Screen.FindScreenBookList.route,
+                enterTransition = {
+                    slideInHorizontally(
+                        initialOffsetX = { -it },
+                        animationSpec = tween(1000)
+                    ) + fadeIn(tween(1000))
+                },
+                exitTransition = {
+                    slideOutHorizontally(
+                        targetOffsetX = { -it },
+                        animationSpec = tween(1000)
+                    ) + fadeOut(tween(1000))
+                }
+            ) {
                 findScreenBookListContent()
             }
             //экран с информацией книге
-            composable(Screen.FindScreenBook.route) { navBackStack ->
+            composable(
+                route = Screen.FindScreenBook.route,
+                enterTransition = {
+                    fadeIn(tween(1000))
+                },
+                exitTransition = {
+                    fadeOut(tween(1000))
+                }
+            ) { navBackStack ->
                 val bookId = navBackStack.arguments?.getString(Screen.BOOK_ID)!!
                 findScreenBookContent(bookId)
             }
@@ -41,11 +68,33 @@ fun AppNavGraph(
             startDestination = Screen.FavouriteScreenBookList.route
         ) {
             //экран с избранными фильмами
-            composable(Screen.FavouriteScreenBookList.route) {
+            composable(
+                route = Screen.FavouriteScreenBookList.route,
+                enterTransition = {
+                    slideInHorizontally(
+                        initialOffsetX = { it },
+                        animationSpec = tween(1000)
+                    ) + fadeIn(tween(1000))
+                },
+                exitTransition = {
+                    slideOutHorizontally(
+                        targetOffsetX = { it },
+                        animationSpec = tween(1000)
+                    ) + fadeOut(tween(1000))
+                }
+            ) {
                 favouriteScreenBookListContent()
             }
             //экран с информацией о книге
-            composable(Screen.FavouriteScreenBook.route) { navBackStack ->
+            composable(
+                route = Screen.FavouriteScreenBook.route,
+                enterTransition = {
+                    fadeIn(tween(1000))
+                },
+                exitTransition = {
+                    fadeOut(tween(1000))
+                }
+            ) { navBackStack ->
                 val bookId = navBackStack.arguments?.getString(Screen.BOOK_ID)!!
                 favouriteScreenBookContent(bookId)
             }
