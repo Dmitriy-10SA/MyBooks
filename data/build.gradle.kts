@@ -4,6 +4,9 @@ plugins {
 
     //for Dagger 2
     id("kotlin-kapt")
+
+    //for Room
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -38,6 +41,11 @@ android {
 dependencies {
     //domain
     implementation(project(":domain"))
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     //Retrofit
     implementation(libs.gson)

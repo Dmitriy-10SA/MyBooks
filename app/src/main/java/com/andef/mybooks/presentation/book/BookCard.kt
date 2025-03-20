@@ -24,6 +24,7 @@ import com.andef.mybooks.R
 import com.andef.mybooks.domain.entities.Book
 import com.andef.mybooks.ui.theme.MyBooksTheme
 
+//карточка книги
 @Composable
 fun BookCard(book: Book, onBookClickListener: (Book) -> Unit) {
     Column(
@@ -62,6 +63,7 @@ fun BookCard(book: Book, onBookClickListener: (Book) -> Unit) {
     }
 }
 
+//обложка для книги, которая не имеет своей обложки
 private const val UNKNOWN_THUMBNAIL =
     "https://books.google.ru/googlebooks/images/no_cover_thumb.gif"
 

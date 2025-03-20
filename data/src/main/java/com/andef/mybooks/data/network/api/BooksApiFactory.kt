@@ -1,11 +1,11 @@
-package com.andef.mybooks.data.api
+package com.andef.mybooks.data.network.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiFactory {
+object BooksApiFactory {
     private const val BASE_URL = "https://www.googleapis.com/books/v1/"
 
     private val okHttpClient = OkHttpClient.Builder()
@@ -20,15 +20,15 @@ object ApiFactory {
         .client(okHttpClient)
         .build()
 
-    private var instance: ApiService? = null
+    private var instance: BooksApiService? = null
 
-    fun getInstance(): ApiService {
+    fun getInstance(): BooksApiService {
         if (instance != null) {
             return instance!!
         }
         synchronized(this) {
             if (instance == null) {
-                instance = retrofit.create(ApiService::class.java)
+                instance = retrofit.create(BooksApiService::class.java)
             }
             return instance!!
         }

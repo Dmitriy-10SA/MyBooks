@@ -1,17 +1,17 @@
-package com.andef.mybooks.data.repository
+package com.andef.mybooks.data.network.repository
 
-import com.andef.mybooks.data.api.ApiService
-import com.andef.mybooks.data.mappers.BookListDtoToListOfBookMapper
+import com.andef.mybooks.data.network.api.BooksApiService
+import com.andef.mybooks.data.network.mapper.BookListDtoToListOfBookMapper
 import com.andef.mybooks.domain.entities.Book
 import com.andef.mybooks.domain.repository.network.BookNetworkRepository
 import okio.IOException
 import javax.inject.Inject
 
 class BookNetworkRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val booksApiService: BooksApiService
 ) : BookNetworkRepository {
     override suspend fun getBookList(query: String): List<Book> {
-        val response = apiService.getBookList(query)
+        val response = booksApiService.getBookList(query)
         if (response.isSuccessful) {
             return BookListDtoToListOfBookMapper.map(response.body())
         } else {

@@ -5,6 +5,9 @@ plugins {
 
     //for Dagger 2
     id("kotlin-kapt")
+
+    //for Room
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -62,6 +65,11 @@ dependencies {
 
     //ViewModelScope
     implementation(libs.lifecycle.viewmodel.ktx)
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

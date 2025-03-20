@@ -5,6 +5,6 @@ import com.andef.mybooks.di.DaggerAppComponent
 
 class MyBooksApplication : Application() {
     val component by lazy {
-        DaggerAppComponent.create()
+        DaggerAppComponent.factory().create(this)
     }
 }

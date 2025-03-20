@@ -6,7 +6,10 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
+//состояние навигации
 class NavigationState(val navHostController: NavHostController) {
+    //навигация к указанному route с сохранение состояния и добавлением
+    //в бэк-стек начальной вершины графа (экран поиска книг)
     fun navigateTo(route: String) {
         navHostController.navigate(route) {
             popUpTo(navHostController.graph.findStartDestination().id) {

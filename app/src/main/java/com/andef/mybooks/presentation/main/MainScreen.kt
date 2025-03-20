@@ -15,6 +15,7 @@ import com.andef.mybooks.presentation.book.BookTopBar
 import com.andef.mybooks.presentation.find.FindScreenBookList
 import com.andef.mybooks.ui.theme.MyBooksTheme
 
+//главный экран приложения
 @Composable
 fun MainScreen(viewModelFactory: ViewModelFactory) {
     val navigationState = rememberNavigationState()

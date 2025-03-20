@@ -46,6 +46,7 @@ import com.andef.mybooks.presentation.ViewModelFactory
 import com.andef.mybooks.presentation.book.BookCard
 import com.andef.mybooks.ui.theme.MyBooksTheme
 
+//экран поиска книг
 @Composable
 fun FindScreenBookList(
     paddingValues: PaddingValues,

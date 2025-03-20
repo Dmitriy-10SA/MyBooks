@@ -21,6 +21,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.andef.mybooks.R
 import com.andef.mybooks.navigation.NavigationState
 
+//нижняя навигация для приложения
 @Composable
 fun MainBottomBar(navigationState: NavigationState) {
     NavigationBar(
