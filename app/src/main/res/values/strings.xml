@@ -5,7 +5,6 @@
     <string name="heart_icon">Значок сердца</string>
     <string name="favourite">Избранное</string>
     <string name="clear_input_text">Отчистка введеного текста</string>
-    <string name="search_hint">" Поиск"</string>
     <string name="cover_book">Обложка книги</string>
     <string name="unknown_author">Автор неизвестен</string>
     <string name="unknown_title">Название неизвестно</string>
@@ -14,4 +13,8 @@
     <string name="query_error_retry">Ошибка выполнения запроса, попробуйте повторить</string>
     <string name="retry">Попробовать еще</string>
     <string name="back">Назад</string>
+    <string name="success_remove_favourite_book">Книга успешно удалена из избранного</string>
+    <string name="success_add_favourite_book">Книга успешно добавлена в избранное</string>
+    <string name="error_remove_favourite_book">Ошибка удаления избранной книги</string>
+    <string name="error_add_favourite_book">Ошибка добавления в избранное</string>
 </resources>

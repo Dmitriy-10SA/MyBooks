@@ -12,11 +12,11 @@ import javax.inject.Inject
 class BookDatabaseRepositoryImpl @Inject constructor(
     private val booksDao: BooksDao
 ) : BookDatabaseRepository {
-    override suspend fun addBook(book: Book) {
+    override suspend fun addFavouriteBook(book: Book) {
         booksDao.addBook(BookToFavouriteBookDbModelMapper.map(book))
     }
 
-    override suspend fun removeBook(id: String) {
+    override suspend fun removeFavouriteBook(id: String) {
         booksDao.removeBook(id)
     }
 

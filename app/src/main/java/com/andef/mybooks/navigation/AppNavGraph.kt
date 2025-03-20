@@ -12,7 +12,8 @@ fun AppNavGraph(
     navHostController: NavHostController,
     findScreenBookListContent: @Composable () -> Unit,
     findScreenBookContent: @Composable () -> Unit,
-    favouriteScreen: @Composable () -> Unit
+    favouriteScreenBookListContent: @Composable () -> Unit,
+    favouriteScreenBookContent: @Composable () -> Unit
 ) {
     NavHost(
         navController = navHostController,
@@ -32,9 +33,19 @@ fun AppNavGraph(
                 findScreenBookContent()
             }
         }
-        //элемент навигации "избранное", экран с избранными фильмами
-        composable(Screen.FavouriteScreen.route) {
-            favouriteScreen()
+        //элемент навигации "избранное"
+        navigation(
+            route = Screen.FavouriteScreen.route,
+            startDestination = Screen.FavouriteScreenBookList.route
+        ) {
+            //экран с избранными фильмами
+            composable(Screen.FavouriteScreenBookList.route) {
+                favouriteScreenBookListContent()
+            }
+            //экран с информацией о книге
+            composable(Screen.FavouriteScreenBook.route) {
+                favouriteScreenBookContent()
+            }
         }
     }
 }

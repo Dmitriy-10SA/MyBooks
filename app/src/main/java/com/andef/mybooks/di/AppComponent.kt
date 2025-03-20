@@ -1,6 +1,7 @@
 package com.andef.mybooks.di
 
 import android.app.Application
+import com.andef.mybooks.di.database.BookDatabaseRepositoryModule
 import com.andef.mybooks.di.database.BooksDaoModule
 import com.andef.mybooks.di.network.BookNetworkRepositoryModule
 import com.andef.mybooks.di.network.BooksApiServiceModule
@@ -13,6 +14,7 @@ import dagger.Component
     modules = [
         BooksApiServiceModule::class,
         BookNetworkRepositoryModule::class,
+        BookDatabaseRepositoryModule::class,
         ViewModelModule::class,
         BooksDaoModule::class,
         BooksApiServiceModule::class

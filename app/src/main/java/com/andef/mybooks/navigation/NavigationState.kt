@@ -19,6 +19,16 @@ class NavigationState(val navHostController: NavHostController) {
             restoreState = true
         }
     }
+
+    fun navigateToBookScreenFromFavouriteScreen() {
+        navHostController.navigate(Screen.FavouriteScreenBook.route) {
+            popUpTo(Screen.FavouriteScreenBookList.route) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
 }
 
 @Composable
