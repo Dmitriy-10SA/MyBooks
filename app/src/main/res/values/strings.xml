@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyBooks</string>
+    <string name="app_name">Мои книги</string>
     <string name="search">Поиск</string>
     <string name="magnifying_glass_icon">Значок лупы</string>
     <string name="heart_icon">Значок сердца</string>
@@ -22,4 +22,5 @@
     <string name="published_year_unknown">Год публикации не известен</string>
     <string name="empty_description">Описание отсутствует</string>
     <string name="filters">Фильтры</string>
+    <string name="loading_error">Ошибка загрузки</string>
 </resources>

@@ -1,17 +1,13 @@
 package com.andef.mybooks.presentation.find
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,7 +22,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -36,7 +31,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -46,6 +40,7 @@ import com.andef.mybooks.presentation.ViewModelFactory
 import com.andef.mybooks.presentation.book.BooksVerticalGrid
 import com.andef.mybooks.presentation.utils.CenteredLoadIndicator
 import com.andef.mybooks.presentation.utils.CenteredText
+import com.andef.mybooks.presentation.utils.ErrorScreen
 
 //экран поиска книг
 @Composable
@@ -110,55 +105,12 @@ private fun BookList(
         }
 
         FindScreenState.Error -> {
-            ErrorMessage(modifier = modifier, viewModel = viewModel, query = query)
-        }
-    }
-}
-
-@Composable
-private fun ErrorMessage(
-    modifier: Modifier,
-    viewModel: FindScreenViewModel,
-    query: State<String>
-) {
-    Column(
-        modifier = modifier.padding(20.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.query_error_retry),
-                textAlign = TextAlign.Center,
-                fontSize = 18.sp,
-                color = colorResource(R.color.black)
-            )
-            Spacer(modifier = Modifier.padding(6.dp))
-            Button(
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.blue)
-                ),
-                onClick = {
+            ErrorScreen(
+                modifier = modifier,
+                onRetryButtonClickListener = {
                     viewModel.loadBookList(query.value)
                 }
-            ) {
-                Text(
-                    modifier = Modifier.padding(
-                        top = 3.dp,
-                        bottom = 3.dp,
-                        start = 12.dp,
-                        end = 12.dp
-                    ),
-                    text = stringResource(R.string.retry),
-                    fontSize = 16.sp,
-                    color = colorResource(R.color.white)
-                )
-            }
+            )
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.andef.mybooks.presentation.book
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,11 +21,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
+import coil3.compose.SubcomposeAsyncImage
 import com.andef.mybooks.R
 import com.andef.mybooks.domain.entities.Book
 import com.andef.mybooks.presentation.utils.HeartInBox
@@ -43,11 +46,23 @@ fun BookCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            AsyncImage(
+            SubcomposeAsyncImage(
                 modifier = Modifier
                     .height(260.dp)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp)),
+                loading = {
+                    CircularProgressIndicator(
+                        color = colorResource(R.color.light_gray),
+                        trackColor = colorResource(R.color.black)
+                    )
+                },
+                error = {
+                    Image(
+                        painter = painterResource(R.drawable.wifi_error),
+                        contentDescription = stringResource(R.string.loading_error)
+                    )
+                },
                 model = book.thumbnailLink ?: UNKNOWN_BOOK_THUMBNAIL,
                 contentDescription = stringResource(R.string.cover_book),
                 contentScale = ContentScale.FillBounds

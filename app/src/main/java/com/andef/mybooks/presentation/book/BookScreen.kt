@@ -35,7 +35,7 @@ import com.andef.mybooks.R
 import com.andef.mybooks.domain.entities.Book
 import com.andef.mybooks.presentation.ViewModelFactory
 import com.andef.mybooks.presentation.utils.CenteredLoadIndicator
-import com.andef.mybooks.presentation.utils.CenteredText
+import com.andef.mybooks.presentation.utils.ErrorScreen
 import com.andef.mybooks.presentation.utils.UNKNOWN_BOOK_THUMBNAIL
 
 //экран с информацией о книге
@@ -67,8 +67,11 @@ fun BookScreen(
         }
 
         BookScreenState.Error -> {
-            ErrorScreen(
+            ErrorScreenWithTopBar(
                 paddingValues = paddingValues,
+                onRetryButtonClickListener = {
+                    viewModel.loadBookById(id)
+                },
                 onBackButtonClickListener = onBackButtonClickListener
             )
         }
@@ -112,7 +115,11 @@ private fun LoadScreen(paddingValues: PaddingValues, onBackButtonClickListener: 
 }
 
 @Composable
-private fun ErrorScreen(paddingValues: PaddingValues, onBackButtonClickListener: () -> Unit) {
+private fun ErrorScreenWithTopBar(
+    paddingValues: PaddingValues,
+    onRetryButtonClickListener: () -> Unit,
+    onBackButtonClickListener: () -> Unit
+) {
     Scaffold(
         containerColor = colorResource(R.color.white),
         modifier = Modifier
@@ -125,11 +132,11 @@ private fun ErrorScreen(paddingValues: PaddingValues, onBackButtonClickListener:
             )
         }
     ) { innerScaffoldPaddingValues ->
-        CenteredText(
+        ErrorScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerScaffoldPaddingValues),
-            text = stringResource(R.string.exception_when_get_book_by_id)
+            onRetryButtonClickListener = onRetryButtonClickListener
         )
         BackHandler {
             onBackButtonClickListener()
