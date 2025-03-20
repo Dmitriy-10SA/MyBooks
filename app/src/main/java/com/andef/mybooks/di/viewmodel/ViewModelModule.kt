@@ -1,4 +1,4 @@
-package com.andef.mybooks.di
+package com.andef.mybooks.di.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.andef.mybooks.presentation.book.BookScreenViewModel

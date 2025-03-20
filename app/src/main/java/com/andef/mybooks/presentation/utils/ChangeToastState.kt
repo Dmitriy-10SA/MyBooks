@@ -7,8 +7,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.ui.res.stringResource
 import com.andef.mybooks.R
-import com.andef.mybooks.presentation.main.MainSnackBarType
 import com.andef.mybooks.presentation.main.MainScreenToast
+import com.andef.mybooks.presentation.main.MainSnackBarType
 import kotlinx.coroutines.CoroutineScope
 
 //изменение состояния toast (успех, ошибка или ничего)

@@ -5,6 +5,7 @@ import com.andef.mybooks.di.database.BookDatabaseRepositoryModule
 import com.andef.mybooks.di.database.BooksDaoModule
 import com.andef.mybooks.di.network.BookNetworkRepositoryModule
 import com.andef.mybooks.di.network.BooksApiServiceModule
+import com.andef.mybooks.di.viewmodel.ViewModelModule
 import com.andef.mybooks.presentation.MainActivity
 import dagger.BindsInstance
 import dagger.Component

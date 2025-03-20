@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetBookByIdUseCase @Inject constructor(
     private val repository: BookDatabaseRepository
 ) {
-   suspend fun execute(id: String): Book {
-       return repository.getBookById(id)
-   }
+    suspend fun execute(id: String): Book {
+        return repository.getBookById(id)
+    }
 }
