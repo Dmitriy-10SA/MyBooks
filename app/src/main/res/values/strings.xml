@@ -21,4 +21,5 @@
     <string name="description">Описание</string>
     <string name="published_year_unknown">Год публикации не известен</string>
     <string name="empty_description">Описание отсутствует</string>
+    <string name="filters">Фильтры</string>
 </resources>
