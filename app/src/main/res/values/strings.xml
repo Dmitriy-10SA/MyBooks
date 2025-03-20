@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">MyBooks</string>
+    <string name="search">Поиск</string>
+    <string name="magnifying_glass_icon">Значок лупы</string>
+    <string name="heart_icon">Значок сердца</string>
+    <string name="favourite">Избранное</string>
+    <string name="clear_input_text">Отчистка введеного текста</string>
+    <string name="search_hint">" Поиск"</string>
+    <string name="cover_book">Обложка книги</string>
+    <string name="unknown_author">Автор неизвестен</string>
+    <string name="unknown_title">Название неизвестно</string>
+    <string name="nothing_was_found_for_your_query">По вашему запросу ничего не найдено</string>
+    <string name="input_title_book_looking_for">Введите название книги, которую ищете</string>
+    <string name="query_error_retry">Ошибка выполнения запроса, попробуйте повторить</string>
+    <string name="retry">Попробовать еще</string>
+    <string name="back">Назад</string>
 </resources>

@@ -2,6 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    //for Dagger 2
+    id("kotlin-kapt")
+
+    //for Room
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -40,6 +46,30 @@ android {
 }
 
 dependencies {
+    //data
+    implementation(project(":data"))
+
+    //domain
+    implementation(project(":domain"))
+
+    //Dagger 2
+    implementation(libs.dagger)
+    kapt(libs.google.dagger.compiler)
+
+    //Navigation with Compose
+    implementation(libs.androidx.navigation.compose)
+
+    //Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    //ViewModelScope
+    implementation(libs.lifecycle.viewmodel.ktx)
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
