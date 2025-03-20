@@ -4,6 +4,9 @@ import com.andef.mybooks.domain.entities.Book
 import kotlinx.coroutines.flow.Flow
 
 interface BookDatabaseRepository {
+    //получение книги по id
+    suspend fun getBookById(id: String): Book
+
     //добавление книги в базу данных избранных книг
     suspend fun addFavouriteBook(book: Book)
 

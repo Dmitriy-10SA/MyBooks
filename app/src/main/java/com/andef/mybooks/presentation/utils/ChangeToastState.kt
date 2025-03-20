@@ -7,20 +7,21 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.ui.res.stringResource
 import com.andef.mybooks.R
-import com.andef.mybooks.presentation.main.ScreenToast
 import com.andef.mybooks.presentation.main.MainSnackBarType
+import com.andef.mybooks.presentation.main.MainScreenToast
 import kotlinx.coroutines.CoroutineScope
 
+//изменение состояния toast (успех, ошибка или ничего)
 @Composable
 fun ChangeToastState(
-    toasts: State<ScreenToast>,
+    toasts: State<MainScreenToast>,
     snackbarHostState: SnackbarHostState,
     scope: CoroutineScope,
     snackbarType: MutableState<MainSnackBarType>,
     initialToastAction: () -> Unit
 ) {
     when (toasts.value) {
-        ScreenToast.ErrorAdd -> {
+        MainScreenToast.ErrorAdd -> {
             Log.d("LOG_LOG", toasts.value.toString())
             errorToast(
                 snackbarHostState = snackbarHostState,
@@ -31,7 +32,7 @@ fun ChangeToastState(
             initialToastAction()
         }
 
-        ScreenToast.ErrorRemove -> {
+        MainScreenToast.ErrorRemove -> {
             Log.d("LOG_LOG", toasts.value.toString())
             errorToast(
                 snackbarHostState = snackbarHostState,
@@ -42,12 +43,12 @@ fun ChangeToastState(
             initialToastAction()
         }
 
-        ScreenToast.Initial -> {
+        MainScreenToast.Initial -> {
             Log.d("LOG_LOG", toasts.value.toString())
             initialToastAction()
         }
 
-        ScreenToast.SuccessAdd -> {
+        MainScreenToast.SuccessAdd -> {
             Log.d("LOG_LOG", toasts.value.toString())
             successToast(
                 snackbarHostState = snackbarHostState,
@@ -58,7 +59,7 @@ fun ChangeToastState(
             initialToastAction()
         }
 
-        ScreenToast.SuccessRemove -> {
+        MainScreenToast.SuccessRemove -> {
             Log.d("LOG_LOG", toasts.value.toString())
             successToast(
                 snackbarHostState = snackbarHostState,

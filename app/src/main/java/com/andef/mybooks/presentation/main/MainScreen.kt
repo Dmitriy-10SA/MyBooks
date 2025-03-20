@@ -1,32 +1,41 @@
 package com.andef.mybooks.presentation.main
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.andef.mybooks.R
+import com.andef.mybooks.domain.entities.Book
 import com.andef.mybooks.navigation.AppNavGraph
 import com.andef.mybooks.navigation.NavigationState
 import com.andef.mybooks.navigation.Screen
 import com.andef.mybooks.navigation.rememberNavigationState
 import com.andef.mybooks.presentation.ViewModelFactory
-import com.andef.mybooks.presentation.book.BookTopBar
-import com.andef.mybooks.presentation.favourite.FavouriteScreenBookList
-import com.andef.mybooks.presentation.find.FindScreenBookList
+import com.andef.mybooks.presentation.book.BookScreen
+import com.andef.mybooks.presentation.book.FavouriteBooksScreen
+import com.andef.mybooks.presentation.find.FindScreen
+import com.andef.mybooks.presentation.utils.ChangeToastState
 import com.andef.mybooks.ui.theme.MyBooksTheme
 
 //главный экран приложения
 @Composable
 fun MainScreen(viewModelFactory: ViewModelFactory) {
+    val viewModel: MainViewModel = viewModel(factory = viewModelFactory)
+    val favouriteBooks = viewModel.favouriteBooks.collectAsState(emptySet())
+    val toast = viewModel.toasts.collectAsState()
+    val scope = rememberCoroutineScope()
+
     val navigationState = rememberNavigationState()
     val snackbarHostState = remember { SnackbarHostState() }
-    val snackbarType = remember { mutableStateOf(MainSnackBarType.SUCCESS as MainSnackBarType) }
+    val snackbarType = remember { mutableStateOf(MainSnackBarType.SUCCESS) }
 
     Scaffold(
         containerColor = colorResource(R.color.white),
@@ -34,21 +43,12 @@ fun MainScreen(viewModelFactory: ViewModelFactory) {
             MainSnackbar(snackbarHostState = snackbarHostState, snackbarType = snackbarType.value)
         },
         topBar = {
-            val currentDestinationRoute = getCurrentDestinationRoute(navigationState)
-            if (currentDestinationRoute == Screen.FindScreenBook.route
-                || currentDestinationRoute == Screen.FavouriteScreenBook.route) {
-                BookTopBar(
-                    onBackButtonClickListener = {
-                        navigationState.navHostController.popBackStack()
-                    }
-                )
-            } else if (currentDestinationRoute == Screen.FavouriteScreenBookList.route) {
-                BookTopBar(
-                    title = stringResource(R.string.favourite),
-                    onBackButtonClickListener = {
+            when (getCurrentDestinationRoute(navigationState)) {
+                Screen.FavouriteScreenBookList.route -> {
+                    MainTopBar(onBackButtonClickListener = {
                         navigationState.navigateTo(Screen.FindScreen.route)
-                    }
-                )
+                    })
+                }
             }
         },
         bottomBar = {
@@ -63,39 +63,97 @@ fun MainScreen(viewModelFactory: ViewModelFactory) {
         AppNavGraph(
             navHostController = navigationState.navHostController,
             findScreenBookListContent = {
-                FindScreenBookList(
+                FindScreen(
                     paddingValues = paddingValues,
                     viewModelFactory = viewModelFactory,
-                    onBookClickListener = {
-                        navigationState.navigateTo(Screen.FindScreenBook.route)
+                    onBookClickListener = { book ->
+                        navigationState.navigateToBookScreenFromFindScreen(book.id)
                     },
-                    snackbarHostState = snackbarHostState,
-                    snackbarType = snackbarType
-                )
-            },
-            findScreenBookContent = {
-                BackHandler {
-                    navigationState.navHostController.popBackStack()
-                }
-            },
-            favouriteScreenBookListContent = {
-                FavouriteScreenBookList(
-                    paddingValues = paddingValues,
-                    viewModelFactory = viewModelFactory,
-                    snackbarHostState = snackbarHostState,
-                    snackbarType = snackbarType,
-                    onBookClickListener = {
-                        navigationState.navigateToBookScreenFromFavouriteScreen()
+                    favouriteBooks = favouriteBooks,
+                    onLikeClickListener = { book ->
+                        onLikeClickAction(
+                            viewModel = viewModel,
+                            book = book,
+                            favouriteBooks = favouriteBooks
+                        )
                     }
                 )
             },
-            favouriteScreenBookContent = {
-                BackHandler {
-                    navigationState.navHostController.popBackStack()
-                }
+            findScreenBookContent = { bookId ->
+                BookScreen(
+                    id = bookId,
+                    paddingValues = paddingValues,
+                    viewModelFactory = viewModelFactory,
+                    onBackButtonClickListener = {
+                        navigationState.navHostController.popBackStack()
+                    },
+                    favouriteBooks = favouriteBooks,
+                    onLikeClickListener = { book ->
+                        onLikeClickAction(
+                            viewModel = viewModel,
+                            book = book,
+                            favouriteBooks = favouriteBooks
+                        )
+                    }
+                )
+            },
+            favouriteScreenBookListContent = {
+                FavouriteBooksScreen(
+                    paddingValues = paddingValues,
+                    onBookClickListener = { book ->
+                        navigationState.navigateToBookScreenFromFavouriteScreen(book.id)
+                    },
+                    onLikeClickListener = { book ->
+                        onLikeClickAction(
+                            viewModel = viewModel,
+                            book = book,
+                            favouriteBooks = favouriteBooks
+                        )
+                    },
+                    favouriteBooks = favouriteBooks
+                )
+            },
+            favouriteScreenBookContent = { bookId ->
+                BookScreen(
+                    id = bookId,
+                    paddingValues = paddingValues,
+                    viewModelFactory = viewModelFactory,
+                    onBackButtonClickListener = {
+                        navigationState.navHostController.popBackStack()
+                    },
+                    favouriteBooks = favouriteBooks,
+                    onLikeClickListener = { book ->
+                        onLikeClickAction(
+                            viewModel = viewModel,
+                            book = book,
+                            favouriteBooks = favouriteBooks
+                        )
+                    }
+                )
+            }
+        )
+
+        ChangeToastState(
+            toasts = toast,
+            snackbarHostState = snackbarHostState,
+            scope = scope,
+            snackbarType = snackbarType,
+            initialToastAction = {
+                viewModel.getInitialToast()
             }
         )
     }
+}
+
+private fun onLikeClickAction(
+    viewModel: MainViewModel,
+    book: Book,
+    favouriteBooks: State<Set<Book>>
+) {
+    viewModel.addOrRemoveFavouriteBook(
+        book = book,
+        isFavourite = favouriteBooks.value.contains(book)
+    )
 }
 
 @Composable

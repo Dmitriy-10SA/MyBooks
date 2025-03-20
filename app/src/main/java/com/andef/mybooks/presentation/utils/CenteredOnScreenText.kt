@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.andef.mybooks.R
 
+//отцентрированый относительно всего свободного места на экране текст
 @Composable
 fun CenteredText(modifier: Modifier, text: String) {
     Column(

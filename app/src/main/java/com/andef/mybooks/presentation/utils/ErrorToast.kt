@@ -5,6 +5,7 @@ import androidx.compose.runtime.MutableState
 import com.andef.mybooks.presentation.main.MainSnackBarType
 import kotlinx.coroutines.CoroutineScope
 
+//toast ошибки работы с базой данных избранных книг
 fun errorToast(
     snackbarHostState: SnackbarHostState,
     scope: CoroutineScope,

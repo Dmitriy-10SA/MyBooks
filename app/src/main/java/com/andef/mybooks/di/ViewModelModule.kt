@@ -1,8 +1,9 @@
 package com.andef.mybooks.di
 
 import androidx.lifecycle.ViewModel
-import com.andef.mybooks.presentation.favourite.FavouriteScreenViewModel
+import com.andef.mybooks.presentation.book.BookScreenViewModel
 import com.andef.mybooks.presentation.find.FindScreenViewModel
+import com.andef.mybooks.presentation.main.MainViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -16,6 +17,11 @@ interface ViewModelModule {
 
     @IntoMap
     @Binds
-    @ViewModelKey(FavouriteScreenViewModel::class)
-    fun bindFavouriteScreenViewModel(impl: FavouriteScreenViewModel): ViewModel
+    @ViewModelKey(BookScreenViewModel::class)
+    fun bindBookScreenViewModel(impl: BookScreenViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(MainViewModel::class)
+    fun bindMainViewModel(impl: MainViewModel): ViewModel
 }

@@ -17,4 +17,8 @@
     <string name="success_add_favourite_book">Книга успешно добавлена в избранное</string>
     <string name="error_remove_favourite_book">Ошибка удаления избранной книги</string>
     <string name="error_add_favourite_book">Ошибка добавления в избранное</string>
+    <string name="exception_when_get_book_by_id">Произошла ошибка при получении книги</string>
+    <string name="description">Описание</string>
+    <string name="published_year_unknown">Год публикации не известен</string>
+    <string name="empty_description">Описание отсутствует</string>
 </resources>

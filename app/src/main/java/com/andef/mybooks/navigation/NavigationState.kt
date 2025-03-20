@@ -1,5 +1,6 @@
 package com.andef.mybooks.navigation
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -20,8 +21,22 @@ class NavigationState(val navHostController: NavHostController) {
         }
     }
 
-    fun navigateToBookScreenFromFavouriteScreen() {
-        navHostController.navigate(Screen.FavouriteScreenBook.route) {
+    fun navigateToBookScreenFromFindScreen(bookId: String) {
+        navHostController.navigate(
+            Screen.FindScreenBook.FIND_SCREEN_BOOK_ROUTE + "/${Uri.encode(bookId)}"
+        ) {
+            popUpTo(Screen.FindScreenBookList.route) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
+    fun navigateToBookScreenFromFavouriteScreen(bookId: String) {
+        navHostController.navigate(
+            Screen.FavouriteScreenBook.FAVOURITE_SCREEN_BOOK_ROUTE + "/${Uri.encode(bookId)}"
+        ) {
             popUpTo(Screen.FavouriteScreenBookList.route) {
                 saveState = true
             }

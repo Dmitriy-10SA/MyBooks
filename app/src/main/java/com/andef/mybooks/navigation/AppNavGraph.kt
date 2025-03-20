@@ -11,9 +11,9 @@ import androidx.navigation.compose.navigation
 fun AppNavGraph(
     navHostController: NavHostController,
     findScreenBookListContent: @Composable () -> Unit,
-    findScreenBookContent: @Composable () -> Unit,
+    findScreenBookContent: @Composable (String) -> Unit,
     favouriteScreenBookListContent: @Composable () -> Unit,
-    favouriteScreenBookContent: @Composable () -> Unit
+    favouriteScreenBookContent: @Composable (String) -> Unit
 ) {
     NavHost(
         navController = navHostController,
@@ -29,10 +29,12 @@ fun AppNavGraph(
                 findScreenBookListContent()
             }
             //экран с информацией книге
-            composable(Screen.FindScreenBook.route) {
-                findScreenBookContent()
+            composable(Screen.FindScreenBook.route) { navBackStack ->
+                val bookId = navBackStack.arguments?.getString(Screen.BOOK_ID)!!
+                findScreenBookContent(bookId)
             }
         }
+
         //элемент навигации "избранное"
         navigation(
             route = Screen.FavouriteScreen.route,
@@ -43,8 +45,9 @@ fun AppNavGraph(
                 favouriteScreenBookListContent()
             }
             //экран с информацией о книге
-            composable(Screen.FavouriteScreenBook.route) {
-                favouriteScreenBookContent()
+            composable(Screen.FavouriteScreenBook.route) { navBackStack ->
+                val bookId = navBackStack.arguments?.getString(Screen.BOOK_ID)!!
+                favouriteScreenBookContent(bookId)
             }
         }
     }

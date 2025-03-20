@@ -9,7 +9,9 @@ sealed class Screen(val route: String) {
     data object FindScreenBookList : Screen(FIND_SCREEN_BOOK_LIST_ROUTE)
 
     //экран с информацией о книге (вложен в FindScreen)
-    data object FindScreenBook : Screen(FIND_SCREEN_BOOK_ROUTE)
+    data object FindScreenBook : Screen(FIND_SCREEN_BOOK_ROUTE_WITH_BOOK_ID) {
+        const val FIND_SCREEN_BOOK_ROUTE = "find_screen_book"
+    }
 
     //элемент навигации "избранное" (главный экран)
     data object FavouriteScreen : Screen(FAVOURITE_SCREEN_ROUTE)
@@ -18,14 +20,18 @@ sealed class Screen(val route: String) {
     data object FavouriteScreenBookList : Screen(FAVOURITE_SCREEN_BOOK_LIST_ROUTE)
 
     //экран с информацией о книге (вложен в FavouriteScreen)
-    data object FavouriteScreenBook : Screen(FAVOURITE_SCREEN_BOOK_ROUTE)
+    data object FavouriteScreenBook : Screen(FAVOURITE_SCREEN_BOOK_ROUTE_WITH_BOOK_ID) {
+        const val FAVOURITE_SCREEN_BOOK_ROUTE = "favourite_screen_book"
+    }
 
     companion object {
         private const val FIND_SCREEN_ROUTE = "find_screen"
         private const val FIND_SCREEN_BOOK_LIST_ROUTE = "find_screen_book_list"
-        private const val FIND_SCREEN_BOOK_ROUTE = "find_screen_book"
+        private const val FIND_SCREEN_BOOK_ROUTE_WITH_BOOK_ID = "find_screen_book/{bookId}"
         private const val FAVOURITE_SCREEN_ROUTE = "favourite_screen"
         private const val FAVOURITE_SCREEN_BOOK_LIST_ROUTE = "favourite_screen_book_list"
-        private const val FAVOURITE_SCREEN_BOOK_ROUTE = "favourite_screen_book"
+        private const val FAVOURITE_SCREEN_BOOK_ROUTE_WITH_BOOK_ID =
+            "favourite_screen_book/{bookId}"
+        const val BOOK_ID = "bookId"
     }
 }

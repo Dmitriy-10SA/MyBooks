@@ -1,6 +1,5 @@
 package com.andef.mybooks.presentation.find
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -28,7 +26,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,7 +38,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -49,25 +45,19 @@ import com.andef.mybooks.R
 import com.andef.mybooks.domain.entities.Book
 import com.andef.mybooks.presentation.ViewModelFactory
 import com.andef.mybooks.presentation.book.BooksVerticalGrid
-import com.andef.mybooks.presentation.main.MainSnackBarType
+import com.andef.mybooks.presentation.utils.CenteredLoadIndicator
 import com.andef.mybooks.presentation.utils.CenteredText
-import com.andef.mybooks.presentation.utils.ChangeToastState
-import com.andef.mybooks.presentation.utils.errorToast
-import com.andef.mybooks.presentation.utils.successToast
-import com.andef.mybooks.ui.theme.MyBooksTheme
 
 //экран поиска книг
 @Composable
-fun FindScreenBookList(
+fun FindScreen(
     paddingValues: PaddingValues,
+    favouriteBooks: State<Set<Book>>,
     viewModelFactory: ViewModelFactory,
-    snackbarHostState: SnackbarHostState,
-    snackbarType: MutableState<MainSnackBarType>,
-    onBookClickListener: (Book) -> Unit
+    onBookClickListener: (Book) -> Unit,
+    onLikeClickListener: (Book) -> Unit
 ) {
     val viewModel: FindScreenViewModel = viewModel(factory = viewModelFactory)
-    val scope = rememberCoroutineScope()
-    val toasts = viewModel.toasts.collectAsState()
     val query = rememberSaveable { mutableStateOf("") }
 
     Column(
@@ -81,33 +71,22 @@ fun FindScreenBookList(
             viewModel = viewModel,
             query = query,
             onBookClickListener = onBookClickListener,
-            onLikeClickListener = { book, isFavourite ->
-                viewModel.addOrRemoveFavouriteBook(book, isFavourite)
-            }
+            onLikeClickListener = onLikeClickListener,
+            favouriteBooks = favouriteBooks
         )
     }
-
-    ChangeToastState(
-        toasts = toasts,
-        snackbarHostState = snackbarHostState,
-        scope = scope,
-        snackbarType = snackbarType,
-        initialToastAction = {
-            viewModel.getInitialToast()
-        }
-    )
 }
 
 @Composable
 private fun BookList(
     modifier: Modifier,
     viewModel: FindScreenViewModel,
+    favouriteBooks: State<Set<Book>>,
     query: State<String>,
     onBookClickListener: (Book) -> Unit,
-    onLikeClickListener: (Book, Boolean) -> Unit
+    onLikeClickListener: (Book) -> Unit
 ) {
     val state = viewModel.state.collectAsState()
-    val favouriteBooks = viewModel.favouriteBooks.collectAsState(emptySet())
 
     when (val currentState = state.value) {
         is FindScreenState.BookList -> {
@@ -128,7 +107,7 @@ private fun BookList(
         }
 
         FindScreenState.Loading -> {
-            LoadIndicator(modifier = modifier.fillMaxWidth())
+            CenteredLoadIndicator(modifier = modifier.fillMaxWidth())
         }
 
         FindScreenState.Error -> {
@@ -182,20 +161,6 @@ private fun ErrorMessage(
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun LoadIndicator(modifier: Modifier) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CircularProgressIndicator(
-            color = colorResource(R.color.light_gray),
-            trackColor = colorResource(R.color.black)
-        )
     }
 }
 
@@ -269,34 +234,3 @@ private fun BooksSearchBar(viewModel: FindScreenViewModel, query: MutableState<S
         content = {}
     )
 }
-
-@Preview
-@Composable
-private fun FindScreenPreviewLight() {
-    MyBooksTheme(darkTheme = false) {
-        FindScreenBookList(
-            TEST_PADDING_VALUES,
-            TEST_VIEW_MODEL_FACTORY,
-            TEST_SNACKBAR_HOST_STATE,
-            TEST_SNACKBAR_TYPE
-        ) { b -> }
-    }
-}
-
-@Preview
-@Composable
-private fun FindScreenPreviewDark() {
-    MyBooksTheme(darkTheme = true) {
-        FindScreenBookList(
-            TEST_PADDING_VALUES,
-            TEST_VIEW_MODEL_FACTORY,
-            TEST_SNACKBAR_HOST_STATE,
-            TEST_SNACKBAR_TYPE
-        ) {}
-    }
-}
-
-private val TEST_SNACKBAR_TYPE = mutableStateOf(MainSnackBarType.SUCCESS)
-private val TEST_SNACKBAR_HOST_STATE = SnackbarHostState()
-private val TEST_PADDING_VALUES = PaddingValues(0.dp)
-private val TEST_VIEW_MODEL_FACTORY = ViewModelFactory(mapOf())

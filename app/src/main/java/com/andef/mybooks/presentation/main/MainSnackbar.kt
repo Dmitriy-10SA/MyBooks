@@ -20,7 +20,7 @@ fun MainSnackbar(
         snackbar = {
             Snackbar(
                 snackbarData = it,
-                containerColor = when(snackbarType) {
+                containerColor = when (snackbarType) {
                     MainSnackBarType.ERROR -> colorResource(R.color.red)
                     MainSnackBarType.SUCCESS -> colorResource(R.color.blue)
                 },
