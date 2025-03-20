@@ -8,6 +8,10 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BooksDao {
+    //получение книги по id
+    @Query("SELECT * FROM book WHERE id = :id")
+    suspend fun getBookById(id: String): BookDbModel
+
     //добавление книги в базу данных избранных книг
     @Insert
     suspend fun addBook(book: BookDbModel)
